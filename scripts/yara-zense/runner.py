@@ -1,0 +1,26 @@
+from compile import _compile_rules
+
+# COMPILATION
+RULES = _compile_rules()
+
+# HELPERS
+
+def _match(yara_bin: bytes):
+    return RULES.match(data=yara_bin)
+
+def _export_as_dict(matches):
+    return [
+        {
+            "rule": m.rule,
+            "namespace": m.namespace,
+            "tags": m.tags,
+            "meta": m.meta,
+        }
+        for m in matches
+    ]
+
+
+# RUNNERS
+def analyze(yara_bin: bytes) -> list[dict]:
+    matches = _match(yara_bin)
+    return _export_as_dict(matches)

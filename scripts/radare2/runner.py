@@ -49,7 +49,7 @@ INIT_COMMAND = "aaa"
 
 # HELPERS
 
-def where_r2() -> str:
+def _where_r2() -> str:
     masquerades = ["r2", "radare2", "radare2.exe", "r2.exe"]
     for name in masquerades:
         path = shutil.which(name)   # `which` doesn't work in version before Python 3.12
@@ -61,7 +61,7 @@ def where_r2() -> str:
     )
 
 
-def file_hashes(path: Path) -> dict:
+def _file_hashes(path: Path) -> dict:
     """Compute MD5 / SHA-1 / SHA-256 in Python"""
     # I don't want to touch r2 whenever possible.
     md5    = hashlib.md5()
@@ -91,7 +91,7 @@ def _no_window() -> dict:
     return {}
 
 
-def run_r2_command(r2_bin: str, target: str, command: str) -> tuple[str, str]:
+def _run_r2_command(r2_bin: str, target: str, command: str) -> tuple[str, str]:
     """
     Run a single r2 command on the target in quiet mode.
     Flags used:
@@ -120,7 +120,7 @@ def run_r2_command(r2_bin: str, target: str, command: str) -> tuple[str, str]:
     # damn this took a while huh, I guess I have forgotten python.
 
 
-def parse_json_output(raw: str):
+def _parse_json_output(raw: str):
     """Try to parse r2 JSON output; fall back to raw string on failure."""
     # Apparently, not all commands are json compatible
 
@@ -146,7 +146,7 @@ def analyze(r2_bin: str, target: Path, extra_cmds: list[str]) -> dict:
             "platform":  platform.system(),
             "r2_path":   r2_bin,
         },
-        "hashes": file_hashes(target),
+        "hashes": _file_hashes(target),
         "analysis": {},
         "errors": [],
     }
@@ -219,8 +219,8 @@ def analyze(r2_bin: str, target: Path, extra_cmds: list[str]) -> dict:
         # for each command spawn a sub process and do:
         print(f"\t[{i}/{total}] {description} ({cmd_str})…")
         # `aaa` runs first, so functions/xrefs are available for later commands
-        stdout, stderr = run_r2_command(r2_bin, str(target), f"{COMMANDS};{cmd_str}")
-        report["analysis"][key] = parse_json_output(stdout)
+        stdout, stderr = _run_r2_command(r2_bin, str(target), f"{COMMANDS};{cmd_str}")
+        report["analysis"][key] = _parse_json_output(stdout)
         if stderr:
             report["errors"].append(f"{key}: {stderr}")
 
