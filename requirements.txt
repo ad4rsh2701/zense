@@ -1,2 +1,6 @@
 
 yara-python
+python-dotenv
+
+yara-python
+requests

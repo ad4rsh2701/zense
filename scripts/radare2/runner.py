@@ -134,7 +134,7 @@ def _parse_json_output(raw: str):
 
 # RUNNERS
 
-def analyze(r2_bin: str, target: Path, extra_cmds: list[str]) -> dict:
+def run(r2_bin: str, target: Path, extra_cmds: list[str]) -> dict:
     """
     Run all commands and return a structured dict.
     """

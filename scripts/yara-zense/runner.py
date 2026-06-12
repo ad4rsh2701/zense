@@ -21,6 +21,6 @@ def _export_as_dict(matches):
 
 
 # RUNNERS
-def analyze(yara_bin: bytes) -> list[dict]:
+def run(yara_bin: bytes) -> list[dict]:
     matches = _match(yara_bin)
     return _export_as_dict(matches)
