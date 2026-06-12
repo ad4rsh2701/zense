@@ -219,7 +219,7 @@ def run(r2_bin: str, target: Path, extra_cmds: list[str]) -> dict:
         # for each command spawn a sub process and do:
         print(f"\t[{i}/{total}] {description} ({cmd_str})…")
         # `aaa` runs first, so functions/xrefs are available for later commands
-        stdout, stderr = _run_r2_command(r2_bin, str(target), f"{COMMANDS};{cmd_str}")
+        stdout, stderr = _run_r2_command(r2_bin, str(target), f"{INIT_COMMAND};{cmd_str}")
         report["analysis"][key] = _parse_json_output(stdout)
         if stderr:
             report["errors"].append(f"{key}: {stderr}")

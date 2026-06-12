@@ -1,7 +1,7 @@
 from pathlib import Path
 import yara
 
-path = Path("../../data/yara-signatures/yara/")
+path = Path(__file__).resolve().parents[2] / "data" / "yara-signatures" / "yara"
 
 # these are for THOR/LOKI, doesn't work for normal YARA
 # yes, I hand-picked them (by running again and again ofc)
