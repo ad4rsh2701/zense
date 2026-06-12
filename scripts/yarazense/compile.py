@@ -22,7 +22,7 @@ EXCLUDED = {
 }
 
 
-def _compile_rules() -> yara.Rules:
+def compile_rules() -> yara.Rules:
 
     print("[zense] Finding YARA rules...")
     rule_files = {}

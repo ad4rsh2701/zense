@@ -1,7 +1,7 @@
-from compile import _compile_rules
+from yarazense.compile import compile_rules
 
 # COMPILATION
-RULES = _compile_rules()
+RULES = compile_rules()
 
 # HELPERS
 

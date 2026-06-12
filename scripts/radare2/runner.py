@@ -49,7 +49,7 @@ INIT_COMMAND = "aaa"
 
 # HELPERS
 
-def _where_r2() -> str:
+def where_r2() -> str:
     masquerades = ["r2", "radare2", "radare2.exe", "r2.exe"]
     for name in masquerades:
         path = shutil.which(name)   # `which` doesn't work in version before Python 3.12
