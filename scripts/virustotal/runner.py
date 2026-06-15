@@ -17,7 +17,7 @@ def _check_existing(file_bytes: bytes) -> dict | None:
 
     if response.status_code == 200:
         attrs = response.json()["data"]["attributes"]
-        print(f"[zense] Already known to VT (sha256: {sha256}), skipping upload.")
+        print(f"\t[*] Already known to VT (sha256: {sha256}), skipping upload.")
         return {
             "analysis_id": sha256,
             "stats": attrs["last_analysis_stats"],
@@ -33,11 +33,11 @@ def _upload_file(file_bytes: bytes, filename: str = "sample.bin") -> dict:
     # damn, LLMs are so good at Python code (or I just forgot enough of Python to tell the difference)
     if len(file_bytes) > LARGE_FILE_THRESHOLD:
         # the math by LLMs
-        print(f"[zense] Large file ({len(file_bytes) / 1024 / 1024:.1f} MB), fetching upload URL...")
+        print(f"\t[*] Large file ({len(file_bytes) / 1024 / 1024:.1f} MB), fetching upload URL...")
         r = requests.get("https://www.virustotal.com/api/v3/files/upload_url", headers={"x-apikey": API_KEY})
         r.raise_for_status()
         url = r.json()["data"]
-        print(f"[zense] Large file upload URL: {url}")
+        print(f"\t[*] Large file upload URL: {url}")
     else:
         url = "https://www.virustotal.com/api/v3/files"
 
@@ -65,14 +65,14 @@ def run(file_bytes: bytes, filename: str = "sample.bin") -> dict:
 
     result = _upload_file(file_bytes, filename)
     analysis_id = result["data"]["id"]
-    print(f"[zense] File uploaded. Analysis ID: {analysis_id}")
+    print(f"\t[*] File uploaded. Analysis ID: {analysis_id}")
 
     i = 0   # polling counter rahhh
     while True:
         analysis = _get_analysis(analysis_id)
         attrs = analysis["data"]["attributes"]
         status = attrs["status"]
-        print(f"[zense] Polling VT: Attempt #{i}, status: {status}")
+        print(f"\t[*] Polling VT: Attempt #{i}, status: {status}")
         i += 1
 
         if status == "completed":
@@ -81,7 +81,7 @@ def run(file_bytes: bytes, filename: str = "sample.bin") -> dict:
                 "stats": attrs["stats"],
                 "results": attrs["results"],
             }
-            print(f"[zense] Analysis via VirtusTotal complete.")
+            print(f"\t[*] Analytics via VirtusTotal received.")
             return output
 
         sleep(120)  # Poll every 120 seconds (FREE TIER RAH, 1 REQUEST PER MINUTE)

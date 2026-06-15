@@ -24,7 +24,7 @@ EXCLUDED = {
 
 def compile_rules() -> yara.Rules:
 
-    print("[zense] Finding YARA rules...")
+    print("\t[*] Finding Existing YARA rules")
     rule_files = {}
 
     for f in path.rglob("*.yar"):
@@ -32,13 +32,13 @@ def compile_rules() -> yara.Rules:
             continue
         rule_files[f.stem] = str(f)
 
-    print(f"[zense] YARA rules found! {len(rule_files)} included, {len(EXCLUDED)} excluded")
+    print(f"\t[*] YARA rules found! {len(rule_files)} included, {len(EXCLUDED)} excluded")
 
     try:
         rules = yara.compile(filepaths=rule_files)
-        print("[zense] All YARA rules compiled successfully")
+        print("\t[*] All YARA rules compiled successfully")
         return rules
     except yara.SyntaxError as e:
         # we crash weeeeeeeeeeeee
-        print(f"[zense] Error compiling YARA rules. Crashing...")
+        print(f"\t[*] Error compiling YARA rules. Crashing...")
         raise e
