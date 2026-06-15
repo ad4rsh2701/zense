@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Retrieve keys
-ar_api_key = os.getenv("AR_KEY")
+ha_api_key = os.getenv("HA_KEY")
 
 # Validate presence
-if not ar_api_key:
-    raise RuntimeError("Missing AR_KEY in .env file")
+if not ha_api_key:
+    raise RuntimeError("Missing HA_KEY in .env file")
