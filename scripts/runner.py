@@ -6,14 +6,10 @@ from core.parser import build_parser
 from core.exporter import export_reports
 
 
-def _run_hybridanalysis(task_uuid: str, file_bytes: bytes) -> dict[str, Any]:
+def _run_hybridanalysis(env_id: str, file_bytes: bytes) -> dict[str, Any]:
     from hybridanalysis import runner as ha_runner
 
-    ioc, summary = ha_runner.run(task_uuid, file_bytes)
-    return {
-        "ioc": ioc,
-        "summary": summary,
-    }
+    return ha_runner.run(env_id, file_bytes)
 
 
 def _run_virustotal(file_bytes: bytes, filename: str) -> dict[str, Any]:
@@ -43,7 +39,7 @@ def run_all(
     file_bytes = sample_path.read_bytes()
 
     print("[zense] Running Falcon HybridAnalysis runner...")
-    anyrun_report = _run_hybridanalysis(environment_id, file_bytes)
+    hybridanalysis_report = _run_hybridanalysis(environment_id, file_bytes)
 
     print("[zense] Running VirusTotal runner...")
     virustotal_report = _run_virustotal(file_bytes, sample_path.name)
@@ -55,7 +51,7 @@ def run_all(
     yara_report = _run_yara(file_bytes)
 
     return {
-        "anyrun": anyrun_report,
+        "hybridanalysis": hybridanalysis_report,
         "virustotal": virustotal_report,
         #"radare2": radare2_report,
         "yara": yara_report,

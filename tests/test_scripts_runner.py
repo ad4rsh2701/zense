@@ -25,8 +25,8 @@ class ScriptsRunnerTests(unittest.TestCase):
             sample_path.write_bytes(b"zenze")
 
             fake_reports = {
-                "hybridanalysis": {"ioc": {}, "summary": {}},
-                "virustotal": {"analysis_id": "abc"},
+                "hybridanalysis": {"summary": {}},
+                "virustotal": {"analysis_id": "abc", "attributes": {}},
                 #"radare2": {"meta": {}},
                 "yara": [{"rule": "dummy"}],
             }
