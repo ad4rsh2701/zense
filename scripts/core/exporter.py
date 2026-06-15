@@ -9,12 +9,13 @@ def export_json(payload: Any, output_path: Path) -> Path:
         json.dump(payload, stream, indent=2, sort_keys=True)
         stream.write("\n")
 
-    print(f"[zense] Exported: {output_path}")
+    print(f"\t[*] Exported: {output_path.name}")
     return output_path
 
 
 def export_reports(output_dir: Path, reports: dict[str, Any]) -> dict[str, Path]:
     exported: dict[str, Path] = {}
+    print(f"[zense] Exporting reports to '{output_dir}'...")
     for name, payload in reports.items():
         exported[name] = export_json(payload, output_dir / f"{name}.json")
     return exported

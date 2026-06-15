@@ -4,6 +4,10 @@
 
 Automated Malware Analytics Aggregator.
 
+```bash
+./zense --help
+```
+
 Script `scripts/runner.py` _orchestrates_ the existing analyzers (Hybrid Analysis, VirusTotal, and YARA) and exports JSON reports for each one.
 
 `zense` doesn't analyze the malware sample itself nor does it ever run it on the system. Even so, running `zense` inside a VM  or on an isolated
@@ -38,35 +42,36 @@ python -m pip install -r requirements.txt
 
 ## Usage
 ```shell
-python scripts\runner.py <sample_path> [--env-id <hybridanalysis_environment_id>] [--output-dir <path>]
+./zense <sample_path> [--env-id <hybridanalysis_environment_id>] [--out-dir <path>]
 ```
 
 - `--env-id` selects the Hybrid Analysis sandbox environment. If omitted, it defaults to `140` (Windows 11). Other common values: `130` (Windows 10), `120` (Windows 7), `300` (Ubuntu 16), `310` (Ubuntu 21).
 
-- Default export directory for reports is `./data` unless specified by `--output-dir`.
+- Default export directory for reports is `data/` unless specified by `--out-dir`.
 
 ### Examples
+
 1. Run with default output directory (`data/`) and default environment (Windows 11):
 
 ```shell
-python scripts\runner.py .\samples\test.bin
+./zense .\samples\test.bin
 ```
 
 2. Run targeting a specific Hybrid Analysis environment:
 
 ```shell
-python scripts\runner.py .\samples\test.bin --env-id 130
+./zense .\samples\test.bin --env-id 130
 ```
 
 3. Run with a custom output directory:
 
 ```shell
-python scripts\runner.py .\samples\test.bin --env-id 140 --output-dir .\data\reports
+./zense .\samples\test.bin --env-id 140 --out-dir .\data\reports
 ```
 
 ### Testing
 
-You can test the scripts by running the following from the project root.
+You can test the scripts by running the following from the project root (no bash/bat scripts are provided, deal with it)
 
 ```shell
 python -m unittest discover -s tests -p "test_*.py"

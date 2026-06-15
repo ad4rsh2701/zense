@@ -21,7 +21,7 @@ class ParserTests(unittest.TestCase):
         self.assertEqual(args.env_id, "120")
         # self.assertEqual(args.r2_cmds, [])
         # self.assertIsNone(args.r2_bin)
-        self.assertEqual(args.output_dir.name, "data")
+        self.assertEqual(args.out_dir.name, "data")
 
 if __name__ == "__main__":
     unittest.main()

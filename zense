@@ -1,0 +1,9 @@
+#!/bin/bash
+# For UNIX
+python3 "$(dirname "$0")/scripts/runner.py" "$@"
+
+# usage:
+#     chmod +x zense
+#     ./zense --help
+# or add it to your bashrc or zshrc (PATH) and you can just do:
+#     zense --help

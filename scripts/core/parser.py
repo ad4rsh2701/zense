@@ -8,7 +8,10 @@ def _default_output_dir() -> Path:
 
 # You guessed it, LLMs
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="[zense] Run all analyzers and export JSON reports")
+    parser = argparse.ArgumentParser(
+        description= "zense - Automated Malware Analytics Aggregator - "
+                     "https://github.com/ad4rsh2701/zense"
+    )
 
     parser.add_argument(
         "sample",   # the urge to name this 'patient'
@@ -34,7 +37,7 @@ def build_parser() -> argparse.ArgumentParser:
     # )
 
     parser.add_argument(
-        "--output-dir",
+        "--out-dir",
         type=Path,
         default=_default_output_dir(),
         help="Directory for exported JSON")

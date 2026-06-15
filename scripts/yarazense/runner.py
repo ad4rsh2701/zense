@@ -22,7 +22,7 @@ def _export_as_dict(matches):
 
 # RUNNERS
 def run(yara_bin: bytes) -> list[dict]:
-    print(f"\t[*] Matching against found rules...")
+    print(f"\t[*] Matching against found rules")
     matches = _match(yara_bin)
     print(f"\t[*] Analytics via YARA received.")
     return _export_as_dict(matches)

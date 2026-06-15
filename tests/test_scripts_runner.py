@@ -37,7 +37,7 @@ class ScriptsRunnerTests(unittest.TestCase):
                         str(sample_path),
                         "--env-id",
                         "140",
-                        "--output-dir",
+                        "--out-dir",
                         str(output_dir),
                     ]
                 )

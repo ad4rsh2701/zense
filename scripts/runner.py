@@ -72,9 +72,9 @@ def main(argv: list[str] | None = None) -> int:
         # r2_bin=args.r2_bin,
         # r2_cmds=args.r2_cmds,
     )
-    exported = export_reports(args.output_dir.resolve(), reports)
+    exported = export_reports(args.out_dir.resolve(), reports)
 
-    print(f"[zense] Done. Exported {len(exported)} JSON reports to: {args.output_dir.resolve()}")
+    print(f"[zense] Done!! Exported {len(exported)} JSON reports to: {args.out_dir.resolve()}")
     return 0
 
 

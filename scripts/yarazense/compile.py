@@ -40,5 +40,5 @@ def compile_rules() -> yara.Rules:
         return rules
     except yara.SyntaxError as e:
         # we crash weeeeeeeeeeeee
-        print(f"\t[*] Error compiling YARA rules. Crashing...")
+        print(f"\t[*] Error compiling YARA rules. Crashing!")
         raise e
