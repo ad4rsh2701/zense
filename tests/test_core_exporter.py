@@ -29,9 +29,9 @@ class ExporterTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             output_dir = Path(temp_dir)
             reports = {
-                "anyrun": {"ok": True},
+                "hybridanalysis": {"ok": True},
                 "virustotal": {"ok": True},
-                "radare2": {"ok": True},
+                #"radare2": {"ok": True},
                 "yara": [{"rule": "dummy"}],
             }
 

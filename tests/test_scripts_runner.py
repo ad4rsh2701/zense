@@ -22,12 +22,12 @@ class ScriptsRunnerTests(unittest.TestCase):
             temp_path = Path(temp_dir)
             sample_path = temp_path / "sample.bin"
             output_dir = temp_path / "out"
-            sample_path.write_bytes(b"MZ")
+            sample_path.write_bytes(b"zenze")
 
             fake_reports = {
-                "anyrun": {"ioc": {}, "summary": {}},
+                "hybridanalysis": {"ioc": {}, "summary": {}},
                 "virustotal": {"analysis_id": "abc"},
-                "radare2": {"meta": {}},
+                #"radare2": {"meta": {}},
                 "yara": [{"rule": "dummy"}],
             }
 
@@ -35,8 +35,8 @@ class ScriptsRunnerTests(unittest.TestCase):
                 result = scripts_runner.main(
                     [
                         str(sample_path),
-                        "--anyrun-task-uuid",
-                        "task-123",
+                        "--env-id",
+                        "140",
                         "--output-dir",
                         str(output_dir),
                     ]
@@ -44,9 +44,9 @@ class ScriptsRunnerTests(unittest.TestCase):
 
             mock_run_all.assert_called_once_with(
                 sample_path=sample_path.resolve(),
-                anyrun_task_uuid="task-123",
-                r2_bin=None,
-                r2_cmds=[],
+                environment_id="140",
+                # r2_bin=None,
+                # r2_cmds=[],
             )
 
             self.assertEqual(result, 0)
