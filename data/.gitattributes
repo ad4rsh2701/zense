@@ -1,0 +1,2 @@
+# Ignore everything under signatures/
+yara-signatures/** linguist-detectable=false

@@ -16,12 +16,16 @@ def _check_existing(file_bytes: bytes) -> dict | None:
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
+        # Return the full file-report attributes block (names, type, signatures,
+        # sandbox verdicts, popular_threat_classification, behavior metadata,
+        # last_analysis_stats/results, etc.)
         attrs = response.json()["data"]["attributes"]
         print(f"\t[*] Already known to VT (sha256: {sha256}), skipping upload.")
+        print(f"\t[*] Existing Analytics via VirtusTotal received.")
         return {
             "analysis_id": sha256,
-            "stats": attrs["last_analysis_stats"],
-            "results": attrs["last_analysis_results"],
+            "source": "file_report",
+            "attributes": attrs,
         }
 
     return None
@@ -76,10 +80,24 @@ def run(file_bytes: bytes, filename: str = "sample.bin") -> dict:
         i += 1
 
         if status == "completed":
+            # Once the analysis is done, fetch the full file report so we get all attributes
+            sha256 = hashlib.sha256(file_bytes).hexdigest()
+            file_report = None
+            try:
+                r = requests.get(
+                    f"https://www.virustotal.com/api/v3/files/{sha256}",
+                    headers={"x-apikey": API_KEY},
+                )
+                if r.status_code == 200:
+                    file_report = r.json()["data"]["attributes"]
+            except requests.RequestException:
+                file_report = None
+
             output = {
                 "analysis_id": analysis_id,
-                "stats": attrs["stats"],
-                "results": attrs["results"],
+                "source": "analysis" if file_report is None else "file_report", # only in python
+                "analysis_attributes": attrs,
+                "attributes": file_report if file_report is not None else attrs,
             }
             print(f"\t[*] Analytics via VirtusTotal received.")
             return output
