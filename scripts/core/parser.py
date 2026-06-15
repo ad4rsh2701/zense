@@ -16,22 +16,22 @@ def build_parser() -> argparse.ArgumentParser:
         help="Path to target malware sample")
 
     parser.add_argument(
-        "--anyrun-task-uuid",
-        required=True,
-        help="Existing ANY.RUN task UUID")
+        "--env-id",
+        required=False,
+        help="Environment ID for Hybrid Analysis",)
 
-    parser.add_argument(
-        "--r2-bin",     # --path-to-r2 sounds better but is long.
-        default=None,
-        help="Path to radare2 binary (defaults to auto-detect)")
+    # parser.add_argument(
+    #     "--r2-bin", # --path-to-r2 sounds better but is long.
+    #     default=None,
+    #     help="Path to radare2 binary (defaults to auto-detect)")
 
-    parser.add_argument(
-        "--r2-cmd",
-        dest="r2_cmds",
-        action="append",
-        default=[],
-        help="Extra radare2 command (repeatable)",
-    )
+    # parser.add_argument(
+    #     "--r2-cmd",
+    #     dest="r2_cmds",
+    #     action="append",
+    #     default=[],
+    #     help="Extra radare2 command (repeatable)",
+    # )
 
     parser.add_argument(
         "--output-dir",
